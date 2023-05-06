@@ -1,9 +1,18 @@
 import "./App.css";
 import React, { useState } from "react";
 
+import { ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+
 import Roles from "./components/roles";
 import Teams from "./components/teams";
 import People from "./components/people";
+
+// axios 와 비슷한 역할을 graphql 에서 해준다고 생각하면 쉬움
+const client = new ApolloClient({
+  uri: "http://localhost:4000",
+  cache: new InMemoryCache(),
+});
 
 function App() {
   const [menu, setMenu] = useState("Roles");
@@ -32,13 +41,15 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Company Management</h1>
-        <nav>
-          <ul>{NavMenus()}</ul>
-        </nav>
-      </header>
-      <main>{mainComp[menu]}</main>
+      <ApolloProvider client={client}>
+        <header className="App-header">
+          <h1>Company Management</h1>
+          <nav>
+            <ul>{NavMenus()}</ul>
+          </nav>
+        </header>
+        <main>{mainComp[menu]}</main>
+      </ApolloProvider>
     </div>
   );
 }
