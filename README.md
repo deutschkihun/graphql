@@ -1,6 +1,6 @@
 # graphql
 
-## Try this queries in first project (apollo-server)
+## Try this queries in first project (1-apollo-server)
 
 ```tsx
 query {
